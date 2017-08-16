@@ -171,6 +171,18 @@ Ada:
   - ada2005
   ace_mode: ada
   language_id: 11
+Adobe Font Metrics:
+  type: data
+  tm_scope: source.afm
+  extensions:
+  - ".afm"
+  aliases:
+  - acfm
+  - adobe composite font metrics
+  - adobe multiple font metrics
+  - amfm
+  ace_mode: text
+  language_id: 147198098
 Agda:
   type: programming
   color: "#315665"
@@ -1457,6 +1469,29 @@ Gentoo Eclass:
   codemirror_mode: shell
   codemirror_mime_type: text/x-sh
   language_id: 128
+Gerber Image:
+  type: data
+  aliases:
+  - rs-274x
+  extensions:
+  - ".gbr"
+  - ".gbl"
+  - ".gbo"
+  - ".gbp"
+  - ".gbs"
+  - ".gko"
+  - ".gpb"
+  - ".gpt"
+  - ".gtl"
+  - ".gto"
+  - ".gtp"
+  - ".gts"
+  interpreters:
+  - "gerbv"
+  - "gerbview"
+  tm_scope: source.gerber
+  ace_mode: text
+  language_id: 404627610
 Gettext Catalog:
   type: prose
   searchable: false
@@ -2114,15 +2149,37 @@ KRL:
   tm_scope: none
   ace_mode: text
   language_id: 186
-KiCad:
-  type: programming
+KiCad Board:
+  type: data
+  extensions:
+  - ".brd"
+  tm_scope: source.pcb.board
+  ace_mode: text
+  language_id: 140848857
+KiCad Layout:
+  type: data
+  aliases:
+  - pcbnew
+  extensions:
+  - ".kicad_pcb"
+  - ".kicad_mod"
+  - ".kicad_wks"
+  filenames:
+  - fp-lib-table
+  tm_scope: source.pcb.sexp
+  ace_mode: lisp
+  codemirror_mode: commonlisp
+  codemirror_mime_type: text/x-common-lisp
+  language_id: 187
+KiCad Schematic:
+  type: data
+  aliases:
+  - eeschema schematic
   extensions:
   - ".sch"
-  - ".brd"
-  - ".kicad_pcb"
-  tm_scope: none
+  tm_scope: source.pcb.schematic
   ace_mode: text
-  language_id: 187
+  language_id: 622447435
 Kit:
   type: markup
   ace_mode: html
@@ -3300,6 +3357,8 @@ Pod:
   wrap: true
   extensions:
   - ".pod"
+  interpreters:
+  - perl
   tm_scope: none
   language_id: 288
 PogoScript:
@@ -3323,6 +3382,7 @@ PostScript:
   extensions:
   - ".ps"
   - ".eps"
+  - ".pfa"
   tm_scope: source.postscript
   aliases:
   - postscr
@@ -3752,10 +3812,10 @@ Ring:
   type: programming
   color: "#0e60e3"
   extensions:
-  - .ring
+  - ".ring"
   tm_scope: source.ring
   ace_mode: text
-  language_id: 431  
+  language_id: 431
 RobotFramework:
   type: programming
   extensions:
@@ -4056,6 +4116,7 @@ Scheme:
   color: "#1e4aec"
   extensions:
   - ".scm"
+  - ".sch"
   - ".sld"
   - ".sls"
   - ".sps"

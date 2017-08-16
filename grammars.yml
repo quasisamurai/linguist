@@ -380,6 +380,7 @@ vendor/grammars/language-css:
 vendor/grammars/language-emacs-lisp:
 - source.emacs.lisp
 vendor/grammars/language-fontforge:
+- source.afm
 - source.fontforge
 - source.opentype
 - text.sfd
@@ -429,8 +430,16 @@ vendor/grammars/language-ninja:
 - source.ninja
 vendor/grammars/language-pan:
 - source.pan
+vendor/grammars/language-pcb:
+- source.gerber
+- source.pcb.board
+- source.pcb.schematic
+- source.pcb.sexp
 vendor/grammars/language-povray:
 - source.pov-ray sdl
+vendor/grammars/language-reason:
+- source.reason
+- source.reason.hover.type
 vendor/grammars/language-regexp:
 - source.regexp
 - source.regexp.extended
@@ -577,8 +586,6 @@ vendor/grammars/r.tmbundle:
 - text.tex.latex.rd
 vendor/grammars/rascal-syntax-highlighting:
 - source.rascal
-vendor/grammars/reason:
-- source.reason
 vendor/grammars/ruby-slim.tmbundle:
 - text.slim
 vendor/grammars/ruby.tmbundle:
