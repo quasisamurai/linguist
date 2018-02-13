@@ -26,4 +26,6 @@ var KnownFields = map[string]bool{
 	"foldingStartMarker": true,
 	"foldingEndMarker":   true,
 	"limitLineLength":    true,
+	"hideFromUser":       true,
+	"injectionSelector":  true,
 }
