@@ -226,6 +226,16 @@ module Linguist
       end
     end
 
+    disambiguate ".gml" do |data|
+      if /^\s*(\<\?xml|xmlns)/i.match(data)
+        Language["XML"]
+      elsif /^\s*(graph|node)\s+\[$/i.match(data)
+        Language["Graph Modeling Language"]
+      else
+        Language["Game Maker Language"]
+      end
+    end
+
     disambiguate ".gs" do |data|
       Language["Gosu"] if /^uses java\./.match(data)
     end
@@ -323,7 +333,7 @@ module Linguist
     disambiguate ".ms" do |data|
       if /^[.'][a-z][a-z](\s|$)/i.match(data)
         Language["Roff"]
-      elsif /(?<!\S)\.(include|globa?l)\s/.match(data) || /(?<!\/\*)(\A|\n)\s*\.[A-Za-z][_A-Za-z0-9]*:/.match(data.gsub(/"([^\\"]|\\.)*"|'([^\\']|\\.)*'|\\\s*(?:--.*)?\n/, ""))
+      elsif !/\/\*/.match(data) && /^\s*\.(?:include\s|globa?l\s|[A-Za-z][_A-Za-z0-9]*:)/.match(data)
         Language["Unix Assembly"]
       else
         Language["MAXScript"]
@@ -339,7 +349,9 @@ module Linguist
     end
 
     disambiguate ".ncl" do |data|
-      if data.include?("THE_TITLE")
+      if /^\s*<\?xml\s+version/i.match(data)
+        Language["XML"]
+      elsif data.include?("THE_TITLE")
         Language["Text"]
       end
     end
@@ -355,7 +367,7 @@ module Linguist
     disambiguate ".php" do |data|
       if data.include?("<?hh")
         Language["Hack"]
-      elsif /<?[^h]/.match(data)
+      elsif /<\?[^h]/.match(data)
         Language["PHP"]
       end
     end
@@ -397,6 +409,14 @@ module Linguist
         Language["XML"]
       elsif /\w+\s*=\s*/i.match(data)
         Language["INI"]
+      end
+    end
+
+    disambiguate ".q" do |data|
+      if /[A-Z.][\w.]*:{/i.match(data) || /(^|\n)\\(cd?|d|l|p|ts?) /.match(data)
+        Language["q"]
+      elsif /SELECT\s+[\w*,]+\s+FROM/i.match(data) || /(CREATE|ALTER|DROP)\s(DATABASE|SCHEMA|TABLE)/i.match(data)
+        Language["HiveQL"]
       end
     end
 
@@ -467,7 +487,7 @@ module Linguist
         Language["Perl"]
       elsif Perl6Regex.match(data)
         Language["Perl 6"]
-      elsif /^\s*%[ \t]+|^\s*var\s+\w+\s*:=\s*\w+/.match(data)
+      elsif /^\s*%[ \t]+|^\s*var\s+\w+(\s*:\s*\w+)?\s*:=\s*\w+/.match(data)
         Language["Turing"]
       end
     end
@@ -518,6 +538,16 @@ module Linguist
         Language["RPC"]
       elsif /^%(end|ctor|hook|group)\b/.match(data)
         Language["Logos"]
+      elsif /OUTPUT_ARCH\(|OUTPUT_FORMAT\(|SECTIONS/.match(data)
+        Language["Linker Script"]
+      end
+    end
+
+    disambiguate ".yy" do |data|
+      if /\"modelName\"\:\s*\"GM/.match(data)
+        Language["JSON"]
+      else
+        Language["Yacc"]
       end
     end
 

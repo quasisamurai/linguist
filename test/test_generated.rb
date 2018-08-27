@@ -66,7 +66,10 @@ class TestGenerated < Minitest::Test
     generated_sample_without_loading_data("go/vendor/gopkg.in/some/nested/path/foo.go")
 
     # .NET designer file
-    generated_sample_without_loading_data("Dummu/foo.designer.cs")
+    generated_sample_without_loading_data("Dummy/foo.designer.cs")
+    generated_sample_without_loading_data("Dummy/foo.Designer.cs")
+    generated_sample_without_loading_data("Dummy/foo.designer.vb")
+    generated_sample_without_loading_data("Dummy/foo.Designer.vb")
 
     # Composer generated composer.lock file
     generated_sample_without_loading_data("JSON/composer.lock")
@@ -115,5 +118,16 @@ class TestGenerated < Minitest::Test
 
     # PostScript
     generated_sample_loading_data("PostScript/lambda.pfa")
+
+    # Perl ppport.h
+    generated_fixture_loading_data("Generated/ppport.h")
+
+    # Graphql Relay
+    generated_sample_without_loading_data("Javascript/__generated__/App_user.graphql.js")
+
+    # Game Maker Studio 2
+    generated_sample_loading_data("JSON/GMS2_Project.yyp")
+    generated_sample_loading_data("JSON/2ea73365-b6f1-4bd1-a454-d57a67e50684.yy")
+
   end
 end

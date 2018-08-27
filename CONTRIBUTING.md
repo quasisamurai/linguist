@@ -1,6 +1,10 @@
 # Contributing
 
-Hi there! We're thrilled that you'd like to contribute to this project. Your help is essential for keeping it great. This project adheres to the [Contributor Covenant Code of Conduct](http://contributor-covenant.org/). By participating, you are expected to uphold this code.
+Hi there! We're thrilled that you'd like to contribute to this project. Your help is essential for keeping it great.
+
+Contributions to this project are [released](https://help.github.com/articles/github-terms-of-service/#6-contributions-under-repository-license) to the public under the [project's open source license](LICENSE).
+
+This project adheres to the [Contributor Covenant Code of Conduct](http://contributor-covenant.org/). By participating, you are expected to uphold this code.
 
 The majority of contributions won't need to touch any Ruby code at all.
 
@@ -20,13 +24,13 @@ Run this command each time a [sample][samples] has been modified.
 
 To run Linguist from the cloned repository:
 
-    bundle exec bin/linguist --breakdown
+    bundle exec bin/github-linguist --breakdown
 
 ### Dependencies
 
-Linguist uses the [`charlock_holmes`](https://github.com/brianmario/charlock_holmes) character encoding detection library which in turn uses [ICU](http://site.icu-project.org/), and the libgit2 bindings for Ruby provided by [`rugged`](https://github.com/libgit2/rugged). These components have their own dependencies - `icu4c`, and `cmake` and `pkg-config` respectively - which you may need to install before you can install Linguist.
+Linguist uses the [`charlock_holmes`](https://github.com/brianmario/charlock_holmes) character encoding detection library which in turn uses [ICU](http://site.icu-project.org/), and the libgit2 bindings for Ruby provided by [`rugged`](https://github.com/libgit2/rugged). [Docker](https://www.docker.com/) is also required when adding or updating grammars. These components have their own dependencies - `icu4c`, and `cmake` and `pkg-config` respectively - which you may need to install before you can install Linguist.
 
-For example, on macOS with [Homebrew](http://brew.sh/): `brew install cmake pkg-config icu4c` and on Ubuntu: `apt-get install cmake pkg-config libicu-dev`.
+For example, on macOS with [Homebrew](http://brew.sh/): `brew install cmake pkg-config icu4c docker` and on Ubuntu: `apt-get install cmake pkg-config libicu-dev docker-ce`.
 
 ## Adding an extension to a language
 
@@ -57,8 +61,7 @@ To add support for a new language:
   This command will analyze the grammar and, if no problems are found, add it to the repository. If problems are found, please report them to the grammar maintainer as you will not be able to add the grammar if problems are found.  
   **Please only add grammars that have [one of these licenses][licenses].**
 1. Add samples for your language to the [samples directory][samples] in the correct subdirectory.
-1. Add a `language_id` for your language using `script/set-language-ids`.  
-  **You should only ever need to run `script/set-language-ids --update`. Anything other than this risks breaking GitHub search :cry:**
+1. Generate a unique ID for your language by running `script/update-ids`.  
 1. Open a pull request, linking to a [GitHub search results](https://github.com/search?utf8=%E2%9C%93&q=extension%3Aboot+NOT+nothack&type=Code&ref=searchresults) showing in-the-wild usage.  
   Please state clearly the license covering the code in the samples. Link directly to the original source if possible.
 
@@ -121,7 +124,6 @@ Linguist is maintained with :heart: by:
 - **@Alhadis**
 - **@BenEddy** (GitHub staff)
 - **@Caged** (GitHub staff)
-- **@grantr** (GitHub staff)
 - **@kivikakk** (GitHub staff)
 - **@larsbrinkhoff**
 - **@lildude** (GitHub staff)
@@ -138,18 +140,19 @@ As Linguist is a production dependency for GitHub we have a couple of workflow r
 
 If you are the current maintainer of this gem:
 
-1. Create a branch for the release: `git checkout -b cut-release-vxx.xx.xx`
+1. Create a branch for the release: `git checkout -b release-vxx.xx.xx`
 1. Make sure your local dependencies are up to date: `script/bootstrap`
 1. If grammar submodules have not been updated recently, update them: `git submodule update --remote && git commit -a`
 1. Ensure that samples are updated: `bundle exec rake samples`
 1. Ensure that tests are green: `bundle exec rake test`
-1. Bump gem version in `lib/linguist/version.rb`, [like this](https://github.com/github/linguist/commit/8d2ea90a5ba3b2fe6e1508b7155aa4632eea2985).
-1. Make a PR to github/linguist, [like this](https://github.com/github/linguist/pull/1238).
-1. Build a local gem: `bundle exec rake build_gem`
-1. Test the gem:
+1. Build a test gem `GEM_VERSION=$(git describe --tags 2>/dev/null | sed 's/-/./g' | sed 's/v//') bundle exec rake build_gem`
+1. Test the test gem:
   1. Bump the Gemfile and Gemfile.lock versions for an app which relies on this gem
   1. Install the new gem locally
   1. Test behavior locally, branch deploy, whatever needs to happen
+1. Bump gem version in `lib/linguist/VERSION`, [like this](https://github.com/github/linguist/commit/3212355400974ce5f7873a71eb8b85b1c5f4a6d2).
+1. Make a PR to github/linguist, [like this](https://github.com/github/linguist/pull/1238).
+1. Build a local gem: `bundle exec rake build_gem`
 1. Merge github/linguist PR
 1. Tag and push: `git tag vx.xx.xx; git push --tags`
 1. Create a GitHub release with the pushed tag (https://github.com/github/linguist/releases/new)
